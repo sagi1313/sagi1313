@@ -1,0 +1,358 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.IO;
+using WpfApp2;
+using System.Security.Cryptography;
+using System.Diagnostics;
+
+namespace WpfApp4
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public string file;
+        public string output;
+        public string obs_type;
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            //timer starts
+            var timer = new Stopwatch();
+            timer.Start();
+
+
+            if (File.Exists("test.txt"))
+            {
+                File.Delete("test.txt");
+            }
+            file = txt1.Text;
+            output = path.Text;
+
+            // events for the right check mark
+            if (Btn1.IsChecked == true)
+                obs_type = "1";
+            else if (Btn2.IsChecked == true)
+                obs_type = "2";
+            else if (Btn3.IsChecked == true)
+                obs_type = "3";
+            else if (Btn4.IsChecked == true)
+                obs_type = "4";
+            else if (Btn5.IsChecked == true)
+                obs_type = "5";
+            else if (Btn6.IsChecked == true)
+                obs_type = "6";
+            else if (Btn7.IsChecked == true)
+                obs_type = "7";
+            else if (Btn8.IsChecked == true)
+                obs_type = "8";
+            else
+                obs_type = "9";
+
+            StreamWriter sw = new StreamWriter("C:\\Users\\user\\Desktop\\mk_8\\txt.txt");
+            //Write the out put for the obfuscator
+            sw.WriteLine(Encrypt(file));
+            sw.WriteLine(Encrypt(obs_type));
+            sw.WriteLine(Encrypt(output));
+            //Close the file
+            sw.Close();
+            string strCmdText;
+            strCmdText = @"/C start C:\Users\user\Desktop\mk_8\obfuscator\AsStrongAsFuck-Modified-master\AsStrongAsFuck-Modified-master\AsStrongAsFuck\bin\Debug\AsStrongAsFuck.exe";
+            System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+            MessageBox.Show("done");
+
+
+            //stop timer
+            timer.Stop();
+            TimeSpan timeTaken = timer.Elapsed;
+            string TimeStr = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
+            Email send = new Email(obs_type);
+            send.SetTime(TimeStr);
+
+        }
+        public static string Encrypt(string decrypted)
+        {
+            string IV = "1a1a1a1a1a1a1a1a";
+            string Key = "1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a13";
+            byte[] textbytes = ASCIIEncoding.ASCII.GetBytes(decrypted);
+            AesCryptoServiceProvider endec = new AesCryptoServiceProvider();
+            endec.BlockSize = 128;
+            endec.KeySize = 256;
+            endec.IV = ASCIIEncoding.ASCII.GetBytes(IV);
+            endec.Key = ASCIIEncoding.ASCII.GetBytes(Key);
+            endec.Padding = PaddingMode.PKCS7;
+            endec.Mode = CipherMode.CBC;
+            ICryptoTransform icrypt = endec.CreateEncryptor(endec.Key, endec.IV);
+            byte[] enc = icrypt.TransformFinalBlock(textbytes, 0, textbytes.Length);
+            icrypt.Dispose();
+            return Convert.ToBase64String(enc);
+        }
+
+        private void Btn1_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Blue;
+            Btn1.Background = Brushes.Yellow;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn2_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Blue;
+            Btn2.Background = Brushes.Yellow;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn3_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Blue;
+            Btn3.Background = Brushes.Yellow;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn4_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Blue;
+            Btn4.Background = Brushes.Yellow;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn5_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Blue;
+            Btn5.Background = Brushes.Yellow;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn6_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Blue;
+            Btn6.Background = Brushes.Yellow;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn7_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Blue;
+            Btn7.Background = Brushes.Yellow;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn8_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Blue;
+            Btn8.Background = Brushes.Yellow;
+            Btn9.Foreground = Brushes.Black;
+            Btn9.Background = Brushes.White;
+        }
+        private void Btn9_Checked(object sender, RoutedEventArgs e)
+        {
+            Btn1.Foreground = Brushes.Black;
+            Btn1.Background = Brushes.White;
+            Btn2.Foreground = Brushes.Black;
+            Btn2.Background = Brushes.White;
+            Btn3.Foreground = Brushes.Black;
+            Btn3.Background = Brushes.White;
+            Btn4.Foreground = Brushes.Black;
+            Btn4.Background = Brushes.White;
+            Btn5.Foreground = Brushes.Black;
+            Btn5.Background = Brushes.White;
+            Btn6.Foreground = Brushes.Black;
+            Btn6.Background = Brushes.White;
+            Btn7.Foreground = Brushes.Black;
+            Btn7.Background = Brushes.White;
+            Btn8.Foreground = Brushes.Black;
+            Btn8.Background = Brushes.White;
+            Btn9.Foreground = Brushes.Blue;
+            Btn9.Background = Brushes.Yellow;
+        }
+
+        private void two_Click(object sender, RoutedEventArgs e)
+        {
+            SecondWin obj_second_window = new SecondWin();
+            obj_second_window.Show();
+        }
+    }
+    public partial class Email : LogEmail
+    {
+        string ObfKind;
+        public Email(string obf)
+        {
+            ObfKind = obf;
+            GetObf();
+        }
+        private void GetObf()
+        {
+            if (ObfKind == "1")
+            {
+                ObfKind = "ConstantsEncoding";
+            }
+            if (ObfKind == "2")
+            {
+                ObfKind = "ModuleRenaming";
+            }
+            if (ObfKind == "3")
+            {
+                ObfKind = "HiddenNamespace";
+            }
+            if (ObfKind == "4")
+            {
+                ObfKind = "ReferenceProxy";
+            }
+            if (ObfKind == "5")
+            {
+                ObfKind = "RenameObfuscation";
+            }
+            if (ObfKind == "6")
+            {
+                ObfKind = "MutationObf";
+            }
+            if (ObfKind == "7")
+            {
+                ObfKind = "NumbersToModuleReference";
+            }
+            if (ObfKind == "8")
+            {
+                ObfKind = "JunkProtection";
+            }
+            if (ObfKind == "9")
+            {
+                ObfKind = "ControlFlowObfuscation";
+            }
+            SetObf(ObfKind);
+        }
+
+
+
+
+
+    }
+
+}
